@@ -1,0 +1,96 @@
+<!-- header -->
+{% include 'header.html' %}
+<!-- navbar -->
+{% include 'navbar.html' %}
+<!-- Begin Page Content -->
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Perbandingan Nilai Performa</h1>
+    </div>
+
+    <!-- Content Row -->
+    <div class="row">
+        <!-- Area Chart -->
+        <div class="col-xl col-lg">
+            <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div
+                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Grafik Perbandingan(%)</h6>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                    <div class="chart-area">
+                        <canvas id="myChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+<!-- /.container-fluid -->
+</div>
+<!-- End of Main Content -->
+{% include 'footer.html' %}
+
+<script>
+
+ var performa = JSON.parse('{{ performa |safe }}');   
+
+</script>
+
+<script src="{{ url_for('static', filename='vendor/chart.js/Chart.min.js') }}"></script>
+<script type="text/javascript">
+    var ctx = document.getElementById("myChart").getContext("2d");
+
+var data = {
+  labels: ["Naive Bayes", "SVM"],
+  datasets: [{
+    label: "Akurasi",
+    backgroundColor: 'rgba(255, 99, 132)',
+    data: [performa[0]['akurasi_nb']*100, performa[1]['akurasi_svm']*100]
+  }, {
+    label: "Presisi",
+    backgroundColor: 'rgba(54, 162, 235)',
+    data: [performa[0]['presisi_nb']*100, performa[1]['presisi_svm']*100]
+  }, {
+    label: "Recall",
+    backgroundColor: 'rgba(255, 206, 86)',
+    data: [performa[0]['rikol_nb']*100, performa[1]['rikol_svm']*100]
+  },{
+    label: "F1-Score",
+    backgroundColor: 'rgba(75, 192, 192)',
+    data: [performa[0]['efwan_nb']*100, performa[1]['efwan_svm']*100]
+  }]
+};
+
+var myBarChart = new Chart(ctx, {
+  type: 'bar',
+  data: data,
+  options: {
+    maintainAspectRatio: false,
+    tooltips: {
+      backgroundColor: "rgb(255,255,255)",
+      bodyFontColor: "#858796",
+      borderColor: '#dddfeb',
+      borderWidth: 1,
+      xPadding: 15,
+      yPadding: 15,
+      displayColors: false,
+      caretPadding: 10,
+    },
+    legend: {
+      display: true
+    },
+    cutoutPercentage: 80,
+  }
+});
+
+</script>
+
+
+
+<!-- footer -->
+{% include 'end.html' %}

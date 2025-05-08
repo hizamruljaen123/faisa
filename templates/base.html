@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>{% block title %}{% endblock %} - Analisis Sentimen</title>
+
+        <!-- Bootstrap Core CSS -->
+        <link href="{{ url_for('static',filename='css/bootstrap.min.css')}}" rel="stylesheet">
+
+        <!-- MetisMenu CSS -->
+        <link href="{{ url_for('static',filename='css/metisMenu.min.css')}}" rel="stylesheet">
+
+        <!-- DataTables CSS -->
+        <link href="{{ url_for('static',filename='css/dataTables/dataTables.bootstrap.css')}}" rel="stylesheet">
+
+        <!-- DataTables Responsive CSS -->
+        <link href="{{ url_for('static',filename='css/dataTables/dataTables.responsive.css')}}" rel="stylesheet">
+
+        <!-- Timeline CSS -->
+        <link href="{{ url_for('static',filename='css/timeline.css')}}" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="{{ url_for('static',filename='css/startmin.css')}}" rel="stylesheet">
+
+        <!-- Morris Charts CSS -->
+        <link href="{{ url_for('static',filename='css/morris.css')}}" rel="stylesheet">
+
+        <!-- Custom Fonts -->
+        <link href="{{ url_for('static',filename='css/font-awesome.min.css')}}" rel="stylesheet" type="text/css">
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body>
+
+        <div id="wrapper">
+
+            <!-- Navigation -->
+            <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="{{url_for('dashboard')}}">Analisis Sentimen</a>
+                </div>
+
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                <ul class="nav navbar-right navbar-top-links">
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-user fa-fw"></i> {{session.nama}} <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li><a href="#" data-toggle="modal" data-target="#myModal"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                    <h4 class="modal-title" id="myModalLabel">Logout</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Apakah anda ingin keluar?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                    <a class="btn btn-primary" href="{{url_for('keluar')}}"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                                                </div>
+                                            </div>
+                                            <!-- /.modal-content -->
+                                        </div>
+                                        <!-- /.modal-dialog -->
+                                    </div>
+                                    <!-- /.modal -->
+                <!-- /.navbar-top-links -->
+
+                <div class="navbar-default sidebar" role="navigation">
+                    <div class="sidebar-nav navbar-collapse">
+                        <ul class="nav" id="side-menu">
+                            <li class="sidebar-search">
+                            </li>
+                            <li>
+                                <a href="{{url_for('dashboard')}}"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                            </li>
+                            <li>
+                                <a href="{{url_for('dataset')}}"><i class="fa fa-table fa-fw"></i> Dataset</a>
+                            </li>
+                            <li>
+                                <a href="{{url_for('textprocessing')}}"><i class="fa fa-wrench fa-fw"></i> Textprocessing</a>
+                            </li>
+                            <li>
+                                <a href="{{url_for('split')}}"><i class="fa fa-edit fa-fw"></i> Split Data</a>
+                            </li>
+                            <li>
+                                <a href="{{url_for('klasifikasi')}}"><i class="fa fa-sitemap fa-fw"></i> Klasifikasi</a>
+                            </li>
+                            <li>
+                                <a href="{{url_for('evaluasi')}}"><i class="fa fa-files-o fa-fw"></i> Evaluasi</a>
+                            </li>
+                            <li>
+                                <a href="{{url_for('wordcloud')}}"><i class="fa fa-bar-chart-o fa-fw"></i> Sebaran Data</a>
+                            </li>
+							<li>
+                                <a href="{{url_for('tree_plot')}}"><i class="fa fa-area-chart fa-fw"></i> Tree Plot</a>
+                            </li>
+                            
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+            <div id="page-wrapper">
+                {% block content %}{% endblock  %}
+            </div>
+            <!-- /#page-wrapper -->
+
+        </div>
+        <!-- /#wrapper -->
+
+		<!-- jQuery -->
+        <script src="{{ url_for('static',filename='js/jquery.min.js')}}"></script>
+
+        <!-- Bootstrap Core JavaScript -->
+        <script src="{{ url_for('static',filename='js/bootstrap.min.js')}}"></script>
+
+        <!-- Metis Menu Plugin JavaScript -->
+        <script src="{{ url_for('static',filename='js/metisMenu.min.js')}}"></script>
+
+        <!-- DataTables JavaScript -->
+        <script src="{{ url_for('static',filename='js/dataTables/jquery.dataTables.min.js')}}"></script>
+        <script src="{{ url_for('static',filename='js/dataTables/dataTables.bootstrap.min.js')}}"></script>
+
+        <!-- Morris Charts JavaScript -->
+        <script src="{{ url_for('static',filename='js/raphael.min.js') }}"></script>
+        <script src="{{ url_for('static',filename='js/morris.min.js') }}"></script>
+
+
+        <!-- Custom Theme JavaScript -->
+        <script src="{{ url_for('static',filename='js/startmin.js')}}"></script>
+
+         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+        {% block script %}
+
+        {% endblock  %}
+
+    </body>
+</html>

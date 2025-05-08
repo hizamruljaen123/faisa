@@ -1,0 +1,169 @@
+{% extends 'base.html' %}
+{%block title%} {{title}} {%endblock%}
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">{{title}}</h1>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="panel panel-yellow">
+                    <div class="panel-heading">
+                        Dataset Scrape
+                    </div>
+                    <!-- /.panel-heading -->
+                    <div class="panel-body">
+                        <form method="POST" action="/scrapedataset" style="display:flex;flex-direction:column">
+                <p>Belum Ada Data? <br> Silahkan Scrape Dataset!</p>
+                                                <div class="form-group">
+                                                    <label>ID Toko</label>
+                                                    <input type="text" name="id_toko" id="id_toko" class="form-control" placeholder="wardah-official" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Bintang</label>
+                                                    <select class="form-control" name="bintang" required>
+                                                        <option value="0">Default</option>
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                        <option value="4">4</option>
+                                                        <option value="5">5</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Jumlah Data</label>
+                                                    <input type="number" name="diambil" id="diambil" placeholder="3000" min="10"  class="form-control" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Rentang Waktu</label>
+                                                    <select class="form-control" name="rentang_waktu" required>
+                                                        <option value="1_bulan">1 Bulan Terakhir</option>
+                                                        <option value="1_tahun">1 Tahun Terakhir</option>
+                                                    </select>
+                                                </div>
+
+                <div class="form-group">
+                    <input type="submit" name="Scrape" value="Ambil Data" class="btn btn-warning mb-3" id="Scrape" target="_blank">
+                                    <input type="submit" name="Scrape" value="Download Data" class="btn btn-info mb-3" id="Scrape" target="_blank">
+
+                </div>
+            </form>
+                    </div>
+                    <!-- /.panel-body -->
+                </div>
+                <!-- /.panel -->
+            </div>
+            <div class="col-lg-6">
+                <div class="panel panel-yellow">
+                    <div class="panel-heading">
+                        Dataset Upload
+                    </div>
+                    <!-- /.panel-heading -->
+                    <div class="panel-body">
+                        <p>Ada data dalam format excel? <br> Upload Disini!</p>
+                        <form method="POST" action="/importdataset" enctype="multipart/form-data" style="display:flex;flex-direction:column">
+                            <div class="form-group">
+                                    <input id="fileimport" name="file" class="mb-3 mt-3" required type="file">
+                            </div>
+                            <input type="submit" name="Import" value="Import" class="btn btn-warning mb-3" id="klikimport">
+                        </form>
+                    </div>
+                    <!-- /.panel-body -->
+                </div>
+                <!-- /.panel -->
+            </div>
+            <div class="col-lg-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                                    <i class="fa fa-bar-chart-o fa-fw"></i> Dataset
+
+                                    <div class="pull-right">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-xs btn-danger dropdown-toggle"
+                                                    data-toggle="dropdown">
+                                                Aksi
+                                                <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu pull-right" role="menu">
+                                                <li>
+                                                    <a href="#" data-toggle="modal" data-target="#hapusdataset">Hapus Dataset</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <br>
+                                </div>
+                    <!-- Modal -->
+                                    <div class="modal fade" id="hapusdataset" tabindex="-1" role="dialog" aria-labelledby="hapusdataset" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                    <h4 class="modal-title" id="hapusdataset">Hapus Dataset</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Apakah anda yakin ingin menghapus semua dataset?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <form method="POST" action="/hapusdataset">
+                                                        <input type="submit" name="Hapus" value="Hapus Dataset" class="btn btn-danger mb-3" id="hapusdataset">
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            <!-- /.modal-content -->
+                                        </div>
+                                        <!-- /.modal-dialog -->
+                                    </div>
+                                    <!-- /.modal -->
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Text</th>
+                                        <th>User</th>
+                                        <th>Product</th>
+                                        <th>Rating</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for d in data %}
+                                        <tr>
+                                            <td>{{ d.no }}</td>
+                                            <td>{{ d.username }}</td>
+                                            <td>{{ d.text }}</td>
+                                            <td>{{ d.product }}</td>
+                                            <td>{{ d.rating }}</td>
+                                            <td>
+                                                <a class="btn btn-block" href='{{url_for("hapus", id=d.id)}}'><i class="fa fa-trash"></i></a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.table-responsive -->
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+    {% endblock  %}
+    {% block script %}
+        <script>
+        $(document).ready(function() {
+        $('#dataTables-example').DataTable({
+        responsive: true
+        });
+        });
+        </script>
+        {%endblock%}

@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% block title %}{{title}}{% endblock %}
+{% block content %}
+
+<div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h1 class="page-header">{{title}}</h1>
+                        </div>
+                        <!-- /.col-lg-12 -->
+                    </div>
+                    <!-- /.row -->
+                    <div class="row">
+                        <div class="col-lg-12">
+                            {%if err%}
+                      <div class="alert alert-warning" role="alert">{{err}}</div>
+                      {%else%}
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    Jumlah Kata Terbanyak
+                                </div>
+                                <!-- /.panel-heading -->
+                                <div class="panel-body">
+                      <img src={{ image | safe}} alt="Chart">
+                                </div>
+                                <!-- /.panel-body -->
+                            </div>
+                            <!-- /.panel -->
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    Grafik Dataset
+                                </div>
+                                <!-- /.panel-heading -->
+                                <div class="panel-body">
+                      <div id="grafik1"></div>
+                                </div>
+                                <!-- /.panel-body -->
+                            </div>
+                            <!-- /.panel -->
+                        </div>
+                    </div>
+                    {%endif%}
+                    <!-- /.row -->
+                </div>
+                <!-- /.container-fluid -->
+{% endblock  %}
+
+{% block script %}
+    <script>
+
+        let spct = null;
+        try {
+            spct = JSON.parse('{{ sentiment_pct | safe }}');
+        } catch (e) {
+            console.error("Error parsing sentiment_pct:", e);
+        }
+
+        if (spct) {
+            total = spct[0] + spct[1];
+
+            Morris.Bar({
+                element: 'grafik1',
+                data: [
+                    { y: 'Positif', x: spct[0] },
+                    { y: 'Negatif', x: spct[1] }
+                ],
+                xkey: 'y',
+                ykeys: 'x',
+                labels: ['Positif ', 'Negatif ']
+            });
+        }
+    </script>
+{% endblock %}

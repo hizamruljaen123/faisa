@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+<!-- Posting Disini -->
+{% block title %}{{title}}{% endblock %}
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">{{title}}</h1>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="jumbotron">
+                    <p class="text-justify">Sentiment analysis merupakan salah satu bidang dari Natural Languange Processing (NLP) yang membangun sistem untuk mengenali dan mengekstraksi opini dalam bentuk teks. Informasi berbentuk teks saat ini banyak terdapat di internet dalam format forum, blog, media sosial, serta situs berisi review. Dengan bantuan sentiment analysis, informasi yang tadinya tidak terstruktur dapat diubah menjadi data yang lebih terstruktur.</p>
+                </div>
+            </div>
+            <!-- /.col-lg-12 -->
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Algoritma C5.0
+                    </div>
+                    <!-- /.panel-heading -->
+                    <div class="panel-body">
+                        <p class="text-justify">Algoritma C5.0 merupakan salah satu algoritma pohon keputusan yang dapat memproses data kinerja pegawai menjadi sebuah aturan yang bisa dijadikan masukan dalam pengambilan keputusan.</p>
+                    </div>
+                    <!-- /.panel-body -->
+                </div>
+                <!-- /.panel -->
+            </div>
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Petunjuk Penggunaan Aplikasi
+                    </div>
+                    <!-- /.panel-heading -->
+                    <div class="panel-body">
+                        <ol>
+                            <li>Upload atau Scrape dataset terlebih dahulu</li>
+                            <li>Lakukan Textprocessing</li>
+                            <li>Lakukan Labelisasi</li>
+                            <li>Split Data</li>
+                            <li>Klasifikasi</li>
+                            <li>Cek Evaluasi</li>
+                        </ol>
+                    </div>
+                    <!-- /.panel-body -->
+                </div>
+                <!-- /.panel -->
+            </div>
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+{% endblock  %}
